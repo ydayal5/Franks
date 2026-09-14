@@ -1,0 +1,13 @@
+# Vendored third-party skill (23 MB) — install it separately, don't commit it
+ui-ux-pro-max-skill-main/
+
+# Vercel CLI project linkage
+.vercel/
+
+# Dependencies
+node_modules/
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini

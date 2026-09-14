@@ -1,0 +1,1861 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Famous Frank's</title>
+<meta name="description" content="Famous Frank's — the All-American Original. Black truck on Pierce St across from Harry's, Thu–Sat 11pm–3:30am, plus the Franks station at Purdue's Cary Knight Spot. Slinging great munchies since 1996.">
+<meta name="theme-color" content="#0B0A09">
+<meta property="og:title" content="Famous Frank's — Go Fat or Go Home">
+<meta property="og:description" content="The All-American Original. Pierce St, Thu–Sat 11pm–3:30am. Cary Knight Spot, meal swipes welcome. Since 1996.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@500;600;700&display=swap">
+
+<style>
+/* ==========================================================
+   FAMOUS FRANK'S — "The All-American Original"
+
+   System: Brutalism. Zero radius, visible 3px borders, hard
+   offset shadows in accent (never blurred), bold 700+ type,
+   visible grid, asymmetric blocks. The truck's own menu board
+   is already brutalist — the site just follows it.
+
+   Colour comes off the truck: the orange ring, the vivid yellow
+   board prices, the red roofline stripe, the chrome beard, and
+   the sky sitting in the mascot's aviators.
+     ORANGE = the truck. Night, 2am.
+     SKY    = the Knight Spot. Campus, meal swipes.
+   ========================================================== */
+
+:root{
+  /* ---- surface ---- */
+  --pitch:  #0B0A09;
+  --char:   #14110F;
+  --soot:   #1D1916;
+
+  /* ---- brand, sampled off the truck ---- */
+  --orange:     #E8622A;
+  --orange-hot: #FF7D3C;
+  --red:        #D42A1C;
+  --yellow:     #FFD400;
+  --gold:       #F7C825;
+  --chrome:     #C6CAD0;
+  --sky:        #74B8E0;
+
+  --cream: #F7F1E8;
+  --ash:   #ADA29A;        /* warm grey — 4.5:1+ on pitch */
+  --ash-dk:#7D736C;
+
+  /* ---- type ---- */
+  --display: "Alfa Slab One", "Rockwell", Georgia, serif;
+  --body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --cond: "Barlow Condensed", "Arial Narrow", sans-serif;
+
+  /* fixed ramp — every size on the page comes from here */
+  --t-xs:  .8125rem;
+  --t-sm:  .9375rem;
+  --t-md:  1.0625rem;
+  --t-lg:  1.25rem;
+  --t-xl:  1.625rem;
+  --t-2xl: 2.25rem;
+  --t-3xl: clamp(2.25rem, 4.5vw, 3.25rem);
+  --t-4xl: clamp(2.75rem, 7vw, 5rem);
+  --t-5xl: clamp(3.25rem, 10.5vw, 8rem);
+
+  /* ---- 8pt spacing scale ---- */
+  --s1: 8px;  --s2: 16px; --s3: 24px; --s4: 32px;
+  --s5: 48px; --s6: 64px; --s7: 96px; --s8: 128px;
+
+  /* ---- brutalist primitives ---- */
+  --bd: 3px;
+  --sh:    8px 8px 0 var(--orange);
+  --sh-sm: 5px 5px 0 var(--orange);
+  --sh-lg: 12px 12px 0 var(--orange);
+  --sh-btn: 5px 5px 0 var(--red);
+  --sh-sky: 8px 8px 0 var(--sky);
+  --ease: cubic-bezier(.2,.7,.3,1);
+
+  --gut: clamp(16px, 4vw, 56px);
+  color-scheme: dark;
+}
+
+*{ box-sizing: border-box; }
+html{ -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior: auto; } }
+
+body{
+  margin: 0;
+  background: var(--pitch);
+  color: var(--cream);
+  font-family: var(--body);
+  font-size: var(--t-md);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, svg{ max-width: 100%; }
+h1,h2,h3,h4,h5{ margin: 0; text-wrap: balance; }
+p{ margin: 0; }
+ul,ol{ margin: 0; padding: 0; list-style: none; }
+
+a{ color: var(--gold); text-underline-offset: .2em; }
+a:hover{ color: var(--yellow); }
+button, a[href], label, select, summary{ cursor: pointer; }
+
+/* WCAG 2.2: >=2px perimeter, 3:1 state contrast */
+:focus-visible{ outline: 3px solid var(--sky); outline-offset: 3px; }
+
+.wrap{ width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: var(--gut); }
+.prose{ max-width: 58ch; }
+.stack{ display: grid; gap: var(--s2); }
+
+.skip{
+  position: absolute; left: -9999px; z-index: 99;
+  background: var(--yellow); color: #000;
+  padding: var(--s1) var(--s2); font-weight: 700;
+}
+.skip:focus{ left: var(--s2); top: var(--s2); }
+
+/* ---------- house lettering ---------- */
+.slab{
+  font-family: var(--display); font-weight: 400;
+  line-height: 1.02; text-transform: uppercase;
+  color: var(--gold); letter-spacing: .005em;
+  text-shadow: 4px 4px 0 var(--pitch), 8px 8px 0 rgba(212,42,28,.55);
+}
+.slab--cream{ color: var(--cream); }
+.slab--sky{ color: var(--sky); text-shadow: 4px 4px 0 var(--pitch); }
+.slab--chrome{
+  color: transparent;
+  background: linear-gradient(178deg, #FFF 6%, var(--chrome) 30%, #59606A 54%, var(--chrome) 76%, #FFF 98%);
+  -webkit-background-clip: text; background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(4px 4px 0 var(--pitch));
+}
+
+.eyebrow{
+  font-family: var(--cond); font-size: var(--t-sm); font-weight: 700;
+  letter-spacing: .26em; text-transform: uppercase;
+  color: var(--orange-hot);
+  display: inline-block;
+  border-bottom: var(--bd) solid var(--orange);
+  padding-bottom: var(--s1);
+}
+.eyebrow--sky{ color: var(--sky); border-color: var(--sky); }
+
+/* ---------- buttons ---------- */
+.btn{
+  display: inline-flex; align-items: center; gap: var(--s1);
+  font-family: var(--cond); font-size: var(--t-lg); font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  min-height: 48px; padding: 10px var(--s3);
+  color: #17110A; background: var(--yellow);
+  border: var(--bd) solid var(--pitch);
+  text-decoration: none;
+  box-shadow: var(--sh-btn);
+  transition: transform .16s var(--ease), box-shadow .16s var(--ease), background-color .16s var(--ease);
+}
+.btn:hover{
+  color: #17110A; background: #FFE14A;
+  transform: translate(-3px,-3px);
+  box-shadow: 8px 8px 0 var(--red);
+}
+.btn:active{ transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--red); }
+.btn--out{
+  background: transparent; color: var(--cream);
+  border-color: var(--cream); box-shadow: 5px 5px 0 var(--orange);
+}
+.btn--out:hover{ background: var(--orange); color: #17110A; border-color: var(--orange); box-shadow: 8px 8px 0 var(--cream); }
+.btn--sky{ background: var(--sky); color: #06121B; box-shadow: 5px 5px 0 var(--pitch); }
+.btn--sky:hover{ background: #9BD0EF; color: #06121B; box-shadow: 8px 8px 0 var(--pitch); }
+
+/* ---------- the flame stripe off the roofline ---------- */
+.stripe{
+  height: 12px; border-block: var(--bd) solid var(--pitch);
+  background: repeating-linear-gradient(90deg,
+    var(--red) 0 40px, var(--orange) 40px 80px, var(--yellow) 80px 120px);
+  background-size: 120px 100%;
+}
+@media (prefers-reduced-motion: no-preference){
+  .stripe{ animation: slide 6s linear infinite; }
+  @keyframes slide{ to{ background-position: 120px 0; } }
+}
+
+/* ---------- sections ---------- */
+.sec{ padding-block: var(--s7); position: relative; }
+.sec--char{ background: var(--char); }
+.sec--grid{
+  background-image:
+    linear-gradient(90deg, rgba(232,98,42,.07) 1px, transparent 1px),
+    linear-gradient(rgba(232,98,42,.07) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.sec__head{ display: grid; gap: var(--s2); margin-bottom: var(--s5); }
+.sec__title{ font-size: var(--t-4xl); }
+
+@media (max-width: 768px){ .sec{ padding-block: var(--s6); } }
+
+/* ---------- reveal: JS-driven only, so no-JS and crawlers
+     always get the finished page ---------- */
+
+/* ================= HEADER ================= */
+
+.head{ position: sticky; top: 0; z-index: 50; background: var(--pitch); }
+.head__bar{ border-bottom: var(--bd) solid var(--soot); }
+.head__in{ display: flex; align-items: center; gap: var(--s2); min-height: 64px; }
+.mark{ display: flex; align-items: center; gap: var(--s1); text-decoration: none; flex: 0 0 auto; }
+
+.mark__txt{ font-family: var(--display); font-size: var(--t-lg); color: var(--gold); text-transform: uppercase; line-height: 1; white-space: nowrap; }
+
+.nav{ display: flex; gap: 2px; margin-left: auto; }
+.nav a{
+  font-family: var(--cond); font-size: var(--t-md); font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ash); text-decoration: none;
+  padding: 10px var(--s2); border: var(--bd) solid transparent;
+  transition: color .16s var(--ease), border-color .16s var(--ease), background-color .16s var(--ease);
+}
+.nav a:hover{ color: var(--yellow); border-color: var(--orange); background: rgba(232,98,42,.12); }
+
+.navtoggle{
+  display: none; margin-left: auto;
+  background: transparent; border: var(--bd) solid var(--cream);
+  color: var(--cream); font-family: var(--cond); font-size: var(--t-md); font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; min-height: 44px; padding: 0 var(--s2);
+}
+
+.pill{
+  display: inline-flex; align-items: center; gap: var(--s1); flex: 0 0 auto;
+  font-family: var(--cond); font-size: var(--t-sm); font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase; white-space: nowrap;
+  padding: 6px var(--s2); border: var(--bd) solid var(--soot);
+  color: var(--ash); background: var(--char);
+}
+.dot{ width: 9px; height: 9px; background: var(--ash-dk); flex: 0 0 auto; }
+.pill[data-state="open"]{ color: #17110A; background: var(--yellow); border-color: var(--yellow); }
+.pill[data-state="open"] .dot{ background: #17110A; }
+.pill[data-state="soon"]{ color: #17110A; background: var(--orange-hot); border-color: var(--orange-hot); }
+.pill[data-state="soon"] .dot{ background: #17110A; }
+.pill[data-state="closed"]{ border-color: var(--orange); }
+.pill[data-state="closed"] .dot{ background: var(--orange); }
+@media (prefers-reduced-motion: no-preference){
+  .pill[data-state="open"] .dot{ animation: blink 1.6s steps(1,end) infinite; }
+  @keyframes blink{ 0%,60%{ opacity:1 } 61%,100%{ opacity:.15 } }
+}
+
+@media (max-width: 1024px){
+  .nav{
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; gap: 0;
+    background: var(--char); border-bottom: var(--bd) solid var(--orange);
+    padding: 0 var(--gut) var(--s2);
+  }
+  .nav.is-open{ display: flex; }
+  .nav a{ padding: var(--s2) 0; border: 0; border-bottom: 1px solid var(--soot); font-size: var(--t-lg); }
+  .navtoggle{ display: inline-flex; align-items: center; }
+  .head__in .pill{ order: 3; }
+}
+@media (max-width: 420px){ .mark__txt{ font-size: var(--t-md); } }
+
+/* ================= HERO ================= */
+
+.hero{ padding-block: var(--s6) var(--s7); position: relative; overflow: hidden; }
+.hero__in{
+  display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,.75fr);
+  gap: var(--s5); align-items: center;
+}
+@media (max-width: 1024px){
+  .hero__in{ grid-template-columns: 1fr; gap: var(--s4); }
+  .badge-wrap{ order: -1; max-width: 300px; margin-inline: auto; }
+}
+
+.hero__word{ font-size: var(--t-5xl); }
+.hero__word span{ display: block; }
+.hero__line{
+  font-family: var(--display); font-size: var(--t-2xl);
+  text-transform: uppercase; line-height: 1.08; color: var(--cream);
+  margin-top: var(--s3); max-width: 17ch;
+  border-left: 6px solid var(--orange); padding-left: var(--s2);
+}
+.hero__sub{ margin-top: var(--s3); color: var(--ash); max-width: 44ch; }
+
+.hero__status{
+  display: inline-flex; align-items: center; gap: var(--s1);
+  margin-top: var(--s4); padding: 10px var(--s2);
+  border: var(--bd) solid var(--soot); background: var(--char);
+  font-family: var(--cond); font-size: var(--t-lg); font-weight: 600;
+  letter-spacing: .05em; color: var(--cream);
+}
+.hero__status b{ color: var(--yellow); font-weight: 700; }
+.hero__status[data-state="open"]{ border-color: var(--yellow); }
+
+.hero__cta{ display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s4); }
+.badge-wrap{ width: 100%; max-width: 380px; justify-self: end; }
+.badge{
+  margin: 0; position: relative;
+  border: var(--bd) solid var(--cream);
+  box-shadow: var(--sh);
+  background: #000;
+  padding: var(--s3);
+}
+.badge::before{
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px;
+  background: repeating-linear-gradient(90deg,
+    var(--red) 0 24px, var(--orange) 24px 48px, var(--yellow) 48px 72px);
+}
+.badge img{ display: block; width: 100%; height: auto; }
+
+/* ================= MARQUEE ================= */
+
+.ticker{
+  background: var(--orange); overflow: hidden; padding-block: 10px;
+  border-block: var(--bd) solid var(--pitch);
+}
+.ticker--sky{ background: var(--sky); }
+.ticker__track{ display: flex; width: max-content; animation: roll 42s linear infinite; }
+.ticker__track span{
+  font-family: var(--display); font-size: var(--t-md);
+  text-transform: uppercase; color: var(--pitch);
+  padding-inline: var(--s2); white-space: nowrap;
+}
+@keyframes roll{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce){ .ticker__track{ animation: none; } }
+
+/* ================= CARDS (one shared object) ================= */
+
+.cards{ display: grid; grid-template-columns: repeat(auto-fit, minmax(288px,1fr)); gap: var(--s4); }
+
+.card{
+  background: var(--soot);
+  border: var(--bd) solid var(--cream);
+  box-shadow: var(--sh);
+  padding: var(--s3);
+  display: flex; flex-direction: column; gap: var(--s2);
+  transition: transform .16s var(--ease), box-shadow .16s var(--ease);
+}
+.card:hover{ transform: translate(-4px,-4px); box-shadow: var(--sh-lg); }
+.card--sky{ border-color: var(--sky); box-shadow: var(--sh-sky); }
+.card--sky:hover{ box-shadow: 12px 12px 0 var(--sky); }
+
+.card__ico{ width: 44px; height: 44px; }
+.card__name{ font-family: var(--display); font-size: var(--t-xl); text-transform: uppercase; line-height: 1.06; color: var(--cream); }
+.card--sky .card__name{ color: var(--sky); }
+.card__when{
+  font-family: var(--cond); font-size: var(--t-md); font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--orange-hot);
+  border-top: var(--bd) solid var(--soot); padding-top: var(--s1);
+}
+.card--sky .card__when{ color: var(--sky); }
+.card p{ color: var(--ash); font-size: var(--t-sm); }
+.card__go{ margin-top: auto; padding-top: var(--s1); }
+.card__go a{
+  font-family: var(--cond); font-size: var(--t-md); font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; text-decoration: none;
+  color: var(--yellow);
+}
+.card__go a:hover{ text-decoration: underline; text-decoration-thickness: 3px; }
+
+/* ================= PHOTO SLOTS =================
+   Art-direction placeholders. Space is reserved with
+   aspect-ratio so dropping the real photo in causes no CLS. */
+
+.slot{ margin: 0; }
+.slot__box{
+  position: relative; aspect-ratio: 4 / 3; width: 100%;
+  border: var(--bd) solid var(--cream); box-shadow: var(--sh);
+  background-color: var(--char);
+  background-image: repeating-linear-gradient(45deg,
+    rgba(232,98,42,.13) 0 2px, transparent 2px 14px);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  gap: var(--s1); padding: var(--s3);
+}
+.slot__box::before{
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 10px;
+  background: repeating-linear-gradient(90deg,
+    var(--red) 0 24px, var(--orange) 24px 48px, var(--yellow) 48px 72px);
+}
+.slot__idx{
+  position: absolute; top: var(--s3); left: var(--s3);
+  font-family: var(--display); font-size: var(--t-2xl); color: var(--orange);
+  line-height: 1;
+}
+.slot__tag{
+  font-family: var(--cond); font-size: var(--t-xs); font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--pitch);
+  background: var(--yellow); padding: 3px var(--s1); align-self: flex-start;
+}
+.slot__label{
+  font-family: var(--cond); font-size: var(--t-lg); font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--cream);
+  line-height: 1.2;
+}
+.slot figcaption{
+  font-family: var(--cond); font-size: var(--t-xs); font-weight: 600;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ash-dk);
+  margin-top: var(--s2);
+}
+
+/* ================= THE BOARD ================= */
+
+.board{ border: 5px solid var(--orange); background: var(--pitch); padding: var(--s3); }
+.board__head{ text-align: center; padding-bottom: var(--s3); }
+.board__head h3{
+  font-family: var(--display); font-size: var(--t-4xl);
+  text-transform: uppercase; color: var(--yellow); line-height: 1;
+  text-shadow: 4px 4px 0 var(--red);
+}
+.board__rule{ height: var(--bd); background: var(--yellow); margin-top: var(--s2); }
+
+.board__grp{ margin-top: var(--s4); }
+.board__grp > h4{
+  font-family: var(--cond); font-size: var(--t-md); font-weight: 700;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: var(--yellow); margin-bottom: var(--s2);
+}
+.grid{
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(232px,1fr));
+  gap: var(--bd); background: var(--orange); border: var(--bd) solid var(--orange);
+}
+.tile{
+  background: var(--pitch); padding: var(--s2);
+  display: flex; flex-direction: column; gap: 6px;
+  transition: background-color .16s var(--ease);
+}
+.tile:hover{ background: #1C1613; }
+.tile h5{
+  font-family: var(--cond); font-size: var(--t-xl); font-weight: 700;
+  text-transform: uppercase; color: var(--orange); line-height: 1;
+}
+.tile p{ font-size: var(--t-xs); line-height: 1.4; color: #FFF; font-weight: 500; }
+.tile .price{
+  margin-top: auto; padding-top: var(--s1);
+  font-family: var(--display); font-size: var(--t-xl); color: var(--yellow);
+  line-height: 1; font-variant-numeric: tabular-nums;
+}
+.tile .price i{ font-style: normal; font-size: .6em; vertical-align: .45em; }
+.tile .note{
+  align-self: flex-start;
+  font-family: var(--cond); font-size: var(--t-xs); font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  background: var(--yellow); color: #17110A; padding: 2px 6px;
+}
+.tile .note--sky{ background: var(--sky); }
+
+.board__also{ margin-top: var(--s4); padding-top: var(--s3); border-top: var(--bd) solid var(--orange); }
+.board__also h4{
+  font-family: var(--cond); font-size: var(--t-md); font-weight: 700;
+  letter-spacing: .28em; text-transform: uppercase; color: var(--yellow); margin-bottom: var(--s2);
+}
+.chips{ display: flex; flex-wrap: wrap; gap: var(--s1); }
+.chips li{
+  font-family: var(--cond); font-size: var(--t-md); font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--orange);
+  border: var(--bd) solid var(--orange); padding: 4px var(--s1);
+}
+.board__foot{
+  margin-top: var(--s4); padding-top: var(--s3); border-top: var(--bd) solid var(--orange);
+  display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); justify-content: space-between; align-items: center;
+}
+.board__foot p{
+  font-family: var(--cond); font-size: var(--t-sm); font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--cream); max-width: 60ch;
+}
+.pays{ display: flex; flex-wrap: wrap; gap: 6px; }
+.pays span{
+  font-family: var(--cond); font-size: var(--t-xs); font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ash); border: 2px solid var(--soot); padding: 3px var(--s1);
+}
+.draftnote{
+  margin-top: var(--s3); font-family: var(--cond); font-size: var(--t-sm); font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ash-dk); text-align: center;
+}
+
+/* ================= MERCH ================= */
+
+.merch{ display: grid; grid-template-columns: repeat(auto-fit, minmax(224px,1fr)); gap: var(--s4); }
+.tee{
+  background: var(--soot); border: var(--bd) solid var(--cream); box-shadow: var(--sh);
+  padding: var(--s3); display: flex; flex-direction: column; gap: var(--s1);
+  transition: transform .16s var(--ease), box-shadow .16s var(--ease);
+}
+.tee:hover{ transform: translate(-4px,-4px); box-shadow: var(--sh-lg); }
+.tee h3{ font-family: var(--display); font-size: var(--t-xl); text-transform: uppercase; color: var(--cream); }
+.tee p{ color: var(--ash); font-size: var(--t-sm); }
+.tee .price{ font-family: var(--display); font-size: var(--t-2xl); color: var(--yellow); margin-top: auto; padding-top: var(--s2); }
+.tee .price i{ font-style: normal; font-size: .6em; vertical-align: .45em; }
+
+.slogan{
+  display: block; margin-top: var(--s5); text-align: center;
+  font-family: var(--display); font-size: var(--t-4xl);
+  text-transform: uppercase; color: var(--yellow); line-height: 1.02;
+  text-shadow: 5px 5px 0 var(--red);
+}
+
+/* ================= CARY ================= */
+
+.cary{ background: #0A131B; border-block: var(--bd) solid var(--sky); }
+.split{
+  display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  gap: var(--s5); align-items: center;
+}
+@media (max-width: 1024px){ .split{ grid-template-columns: 1fr; gap: var(--s4); } }
+
+.swipe{
+  display: inline-block; background: var(--sky); color: #06121B;
+  padding: var(--s2) var(--s3); border: var(--bd) solid var(--pitch);
+  box-shadow: 6px 6px 0 var(--pitch);
+}
+.swipe b{ display: block; font-family: var(--display); font-size: var(--t-xl); text-transform: uppercase; line-height: 1.1; }
+.swipe span{ font-family: var(--cond); font-size: var(--t-sm); font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+
+.ticks{ display: grid; gap: var(--s2); }
+.ticks li{ display: grid; grid-template-columns: auto 1fr; gap: var(--s2); align-items: start; }
+.ticks svg{ margin-top: 5px; }
+.ticks b{ display: block; color: var(--cream); font-weight: 600; }
+.ticks span{ color: var(--ash); font-size: var(--t-sm); }
+
+/* ================= STORY ================= */
+
+.story p{ color: var(--ash); }
+.story .lede{ color: var(--cream); font-size: var(--t-lg); line-height: 1.5; }
+.story b{ color: var(--gold); font-weight: 600; }
+.script{ font-style: italic; font-size: var(--t-lg); color: var(--chrome); }
+
+.beats{ display: grid; gap: var(--s2); }
+.beat{
+  display: grid; grid-template-columns: 84px 1fr; gap: var(--s2);
+  border-left: 6px solid var(--orange); padding: var(--s2) 0 var(--s2) var(--s3);
+  background: var(--char);
+}
+.beat__yr{ font-family: var(--display); font-size: var(--t-md); color: var(--orange-hot); text-transform: uppercase; line-height: 1.2; }
+.beat p{ font-size: var(--t-sm); }
+.beat p b{ color: var(--cream); font-weight: 600; }
+
+.pass{
+  display: grid; grid-template-columns: auto 1fr; gap: var(--s3); align-items: center;
+  background: var(--yellow); color: #17110A;
+  border: var(--bd) solid var(--pitch); box-shadow: 6px 6px 0 var(--pitch);
+  padding: var(--s3);
+}
+.pass__n{ font-family: var(--display); font-size: var(--t-2xl); line-height: 1; }
+.pass p{ color: #3A2A08; font-size: var(--t-sm); }
+.pass p b{ display: block; color: #17110A; font-weight: 700; font-size: var(--t-md); }
+
+/* ================= SAY ================= */
+
+.say{ text-align: center; }
+.say blockquote{
+  margin: 0 auto; max-width: 17ch;
+  font-family: var(--display); font-size: var(--t-3xl);
+  line-height: 1.1; text-transform: uppercase; color: var(--cream);
+  text-shadow: 4px 4px 0 var(--red);
+}
+.say figcaption{
+  margin-top: var(--s3); font-family: var(--cond); font-size: var(--t-md); font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--ash);
+}
+.stars{
+  display: inline-flex; align-items: center; gap: var(--s1); margin-top: var(--s4);
+  border: var(--bd) solid var(--soot); padding: var(--s1) var(--s3);
+  font-family: var(--cond); font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ash); font-size: var(--t-sm);
+}
+.stars b{ font-family: var(--display); font-size: var(--t-lg); color: var(--yellow); letter-spacing: 0; }
+
+/* ================= CATERING / FIND ================= */
+
+.greek{
+  display: inline-block; background: var(--yellow); color: #17110A;
+  font-family: var(--display); font-size: var(--t-xl);
+  text-transform: uppercase; padding: var(--s1) var(--s2); line-height: 1.15;
+  border: var(--bd) solid var(--pitch); box-shadow: 6px 6px 0 var(--pitch);
+}
+.tags{ display: flex; flex-wrap: wrap; gap: var(--s1); }
+.tags li{
+  font-family: var(--cond); font-size: var(--t-md); font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--cream);
+  border: var(--bd) solid var(--cream); padding: 5px var(--s2);
+}
+
+.harrys{ font-family: var(--display); font-size: var(--t-3xl); text-transform: uppercase; line-height: 1.06; color: var(--cream); text-shadow: 4px 4px 0 var(--red); }
+.harrys em{ font-style: normal; color: var(--orange-hot); display: block; }
+
+.facts{ display: grid; gap: var(--s3); }
+.facts .k{
+  font-family: var(--cond); font-size: var(--t-sm); font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--orange);
+  display: block; border-bottom: var(--bd) solid var(--soot); padding-bottom: 5px; margin-bottom: var(--s1);
+}
+.facts .v{ font-size: var(--t-md); color: var(--cream); }
+.facts .v small{ display: block; color: var(--ash); font-size: var(--t-sm); }
+
+.acts{ display: flex; flex-wrap: wrap; gap: var(--s2); }
+.socials{ display: flex; flex-wrap: wrap; gap: var(--s1); }
+.socials a{
+  font-family: var(--cond); font-size: var(--t-md); font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; text-decoration: none;
+  color: var(--cream); border: var(--bd) solid var(--cream); padding: 8px var(--s2);
+  min-height: 44px; display: inline-flex; align-items: center;
+  transition: background-color .16s var(--ease), color .16s var(--ease);
+}
+.socials a:hover{ background: var(--cream); color: var(--pitch); }
+
+/* ================= FORM ================= */
+
+.form{ background: var(--soot); border: var(--bd) solid var(--cream); box-shadow: var(--sh); padding: var(--s4); }
+.seg{ display: flex; flex-wrap: wrap; gap: var(--s1); margin-bottom: var(--s4); }
+.seg label{
+  position: relative; flex: 1 1 170px; text-align: center;
+  font-family: var(--cond); font-size: var(--t-md); font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ash); background: var(--char);
+  border: var(--bd) solid var(--ash-dk); padding: 11px var(--s2); min-height: 46px;
+  transition: background-color .16s var(--ease), color .16s var(--ease), border-color .16s var(--ease);
+}
+.seg input{ position: absolute; opacity: 0; width: 1px; height: 1px; }
+.seg label:hover{ color: var(--cream); border-color: var(--cream); }
+.seg label:has(input:checked){ background: var(--yellow); color: #17110A; border-color: var(--yellow); }
+.seg label:has(input:focus-visible){ outline: 3px solid var(--sky); outline-offset: 3px; }
+
+.fields{ display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
+.f--wide{ grid-column: 1 / -1; }
+@media (max-width: 640px){ .fields{ grid-template-columns: 1fr; } }
+
+.f{ display: grid; gap: 6px; }
+.f label{ font-family: var(--cond); font-size: var(--t-sm); font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ash); }
+.f label .req{ color: var(--orange-hot); }
+.f input, .f select, .f textarea{
+  font-family: var(--body); font-size: var(--t-md); width: 100%;
+  color: var(--cream); background: var(--char);
+  border: var(--bd) solid var(--ash-dk); padding: 11px var(--s2); min-height: 48px;
+}
+.f textarea{ min-height: 120px; resize: vertical; line-height: 1.5; }
+.f input:focus, .f select:focus, .f textarea:focus{ outline: 3px solid var(--sky); outline-offset: 2px; border-color: var(--cream); }
+.f input::placeholder, .f textarea::placeholder{ color: var(--ash-dk); }
+.f .err{ font-family: var(--cond); font-size: var(--t-sm); font-weight: 700; letter-spacing: .06em; color: #FF9382; }
+.f[data-invalid="1"] input, .f[data-invalid="1"] select, .f[data-invalid="1"] textarea{ border-color: var(--red); }
+
+#cateringFields{ display: contents; }
+
+.form__foot{ display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); margin-top: var(--s4); }
+.form__foot p{ color: var(--ash); font-size: var(--t-sm); max-width: 32ch; }
+
+.sent{ background: var(--yellow); color: #17110A; border: var(--bd) solid var(--pitch); box-shadow: 8px 8px 0 var(--pitch); padding: var(--s4); }
+.sent h3{ font-family: var(--display); font-size: var(--t-2xl); text-transform: uppercase; color: #17110A; margin-bottom: var(--s1); }
+.sent p{ color: #3A2A08; margin-bottom: var(--s3); max-width: 52ch; }
+.sent__acts{ display: flex; flex-wrap: wrap; gap: var(--s1); }
+.sent .btn{ background: var(--pitch); color: var(--yellow); border-color: var(--pitch); box-shadow: 4px 4px 0 rgba(0,0,0,.35); }
+.sent .btn:hover{ background: #2A2018; color: var(--yellow); }
+
+/* ================= STICKY MOBILE BAR ================= */
+
+.dock{
+  display: none;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  background: var(--pitch); border-top: var(--bd) solid var(--orange);
+  padding: var(--s1) var(--gut);
+  padding-bottom: calc(var(--s1) + env(safe-area-inset-bottom, 0px));
+  align-items: center; gap: var(--s2);
+}
+.dock__txt{
+  font-family: var(--cond); font-size: var(--t-sm); font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--cream);
+  line-height: 1.2; flex: 1 1 auto;
+}
+.dock__txt b{ display: block; color: var(--yellow); }
+.dock .btn{ font-size: var(--t-md); padding: 8px var(--s2); min-height: 44px; flex: 0 0 auto; }
+@media (max-width: 768px){
+  .dock{ display: flex; }
+  body{ padding-bottom: 84px; }
+}
+
+/* ================= FOOTER ================= */
+
+.foot{ background: var(--char); padding-block: var(--s6) var(--s4); border-top: var(--bd) solid var(--soot); }
+.foot__top{ display: flex; flex-wrap: wrap; gap: var(--s3); align-items: center; justify-content: space-between; }
+.foot__badge{ width: 96px; height: auto; display: block; flex: 0 0 auto; border: var(--bd) solid var(--cream); }
+.foot__cols{ display: grid; grid-template-columns: repeat(auto-fit, minmax(184px,1fr)); gap: var(--s4); margin-top: var(--s5); padding-bottom: var(--s4); }
+.foot__cols h4{ font-family: var(--cond); font-size: var(--t-sm); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--orange); margin-bottom: var(--s2); border-bottom: var(--bd) solid var(--soot); padding-bottom: var(--s1); }
+.foot__cols ul{ display: grid; gap: 5px; }
+.foot__cols li, .foot__cols p{ font-size: var(--t-sm); color: var(--ash); }
+.foot__cols a{ color: var(--ash); text-decoration: none; }
+.foot__cols a:hover{ color: var(--yellow); text-decoration: underline; }
+
+.foot__end{ display: flex; flex-wrap: wrap; gap: var(--s1) var(--s4); justify-content: space-between; align-items: baseline; padding-top: var(--s3); border-top: var(--bd) solid var(--soot); }
+.foot__end p{ font-family: var(--cond); font-size: var(--t-sm); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ash-dk); }
+.foot__end .tag{ color: var(--yellow); }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#grub">Skip to the menu</a>
+
+<header class="head">
+  <div class="stripe"></div>
+  <div class="head__bar">
+    <div class="wrap head__in">
+      <a class="mark" href="#top"><span class="mark__txt">Famous Frank's</span></a>
+
+      <button class="navtoggle" id="navToggle" aria-expanded="false" aria-controls="nav">Menu</button>
+      <nav class="nav" id="nav" aria-label="Sections">
+        <a href="#ways">Find us</a>
+        <a href="#grub">The grub</a>
+        <a href="#cary">Knight Spot</a>
+        <a href="#catering">Catering</a>
+        <a href="#story">Story</a>
+      </nav>
+
+      <span class="pill" id="pillStatus" aria-live="polite">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="pillText">Thu–Sat nights</span>
+      </span>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero sec--grid">
+    <div class="wrap hero__in">
+      <div data-hero>
+        <p class="eyebrow">The All-American Original &middot; Est. 1996</p>
+
+        <h1 class="hero__word slab" style="margin-top:var(--s3)">
+          Go Fat<span class="slab slab--chrome">or Go Home</span>
+        </h1>
+
+        <p class="hero__line" id="heroLine">Late night on Pierce Street.</p>
+        <p class="hero__sub">
+          Slinging great munchies since 1996. The black truck across from
+          Harry's, a Franks station in Cary Quad, and a board full of
+          sandwiches with an entire order stacked inside them.
+        </p>
+
+        <p class="hero__status" id="heroStatus" data-state="unknown">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="heroStatusText">Thursday to Saturday, <b>11PM&ndash;3:30AM</b></span>
+        </p>
+
+        <div class="hero__cta">
+          <a class="btn" href="#grub">Get your grub on</a>
+          <a class="btn btn--out" href="#ways">Where to find us</a>
+        </div>
+      </div>
+
+      <!-- The client's actual logo. 450x444 source — still want a
+           hi-res or vector original for large displays. -->
+      <div class="badge-wrap" data-badge>
+        <figure class="badge">
+          <img src="franks-logo.jpg" width="450" height="444" fetchpriority="high" decoding="async"
+               alt="Famous Frank's logo: a bearded, grinning mascot in a Fat Boy cap and mirrored aviators, ringed in orange.">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true"><div class="ticker__track" id="tick1"></div></div>
+
+  <!-- ================= WAYS ================= -->
+  <section class="sec sec--char" id="ways">
+    <div class="wrap">
+      <div class="sec__head" data-reveal>
+        <p class="eyebrow">However you're getting fed</p>
+        <h2 class="sec__title slab">Three ways<br>to get Franks.</h2>
+      </div>
+
+      <div class="cards" data-reveal-grid>
+        <article class="card">
+          <svg class="card__ico" viewBox="0 0 64 64" aria-hidden="true">
+            <rect x="4" y="22" width="38" height="24" fill="none" stroke="#E8622A" stroke-width="4"/>
+            <path d="M42 30 h10 l8 8 v8 h-18 Z" fill="none" stroke="#E8622A" stroke-width="4"/>
+            <rect x="10" y="28" width="14" height="9" fill="#FFD400"/>
+            <circle cx="18" cy="48" r="6" fill="#14110F" stroke="#E8622A" stroke-width="4"/>
+            <circle cx="48" cy="48" r="6" fill="#14110F" stroke="#E8622A" stroke-width="4"/>
+          </svg>
+          <h3 class="card__name">The Truck</h3>
+          <p class="card__when">Thu &ndash; Sat &middot; 11PM &ndash; 3:30AM</p>
+          <p>
+            30 Pierce St, straight across from Harry's. Black truck, flame
+            stripe, lit window, line out front. Only while campus is in
+            session &mdash; when Purdue goes home, so do we.
+          </p>
+          <p class="card__go"><a href="#find">Get directions &rarr;</a></p>
+        </article>
+
+        <article class="card card--sky">
+          <svg class="card__ico" viewBox="0 0 64 64" aria-hidden="true">
+            <path d="M32 8 L58 20 L32 32 L6 20 Z" fill="none" stroke="#74B8E0" stroke-width="4"/>
+            <path d="M16 26 v14 c0 6 8 10 16 10 s16 -4 16 -10 V26" fill="none" stroke="#74B8E0" stroke-width="4"/>
+            <rect x="26" y="36" width="12" height="8" fill="#74B8E0"/>
+          </svg>
+          <h3 class="card__name">The Knight Spot</h3>
+          <p class="card__when">Cary Quad &middot; On campus</p>
+          <p>
+            Purdue Dining put a Famous Frank's station in the Cary Knight Spot
+            in 2019. Same grub, indoors, and your meal swipe works.
+          </p>
+          <p class="card__go"><a href="#cary">What's on campus &rarr;</a></p>
+        </article>
+
+        <article class="card">
+          <svg class="card__ico" viewBox="0 0 64 64" aria-hidden="true">
+            <rect x="8" y="18" width="34" height="26" fill="none" stroke="#E8622A" stroke-width="4"/>
+            <path d="M14 26 h16 M14 34 h22" stroke="#FFD400" stroke-width="4"/>
+            <circle cx="47" cy="40" r="11" fill="#14110F" stroke="#E8622A" stroke-width="4"/>
+            <path d="M42 40 l4 4 l7 -8" fill="none" stroke="#FFD400" stroke-width="4"/>
+          </svg>
+          <h3 class="card__name">Delivered</h3>
+          <p class="card__when">We deliver with DoorDash</p>
+          <p>
+            Not walking anywhere tonight? Fair. The truck's on DoorDash, so
+            the Fat Frank can come to you instead.
+          </p>
+          <p class="card__go"><a href="https://www.doordash.com/search/store/Famous%20Franks/" target="_blank" rel="noopener">Order on DoorDash &rarr;</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= THE BOARD ================= -->
+  <section class="sec" id="grub">
+    <div class="wrap">
+      <div class="sec__head" data-reveal>
+        <p class="eyebrow">Read the board</p>
+        <h2 class="sec__title slab">The grub.</h2>
+        <p class="prose" style="color:var(--ash)">
+          Fat sandwiches, fried dogs, and fries buried under things that have no
+          business being on fries. Walk up and say it out loud &mdash; there's no
+          app, no QR code and no checkout button on this website.
+        </p>
+      </div>
+
+      <div class="board">
+        <div class="board__head">
+          <h3>Get Your Grub On</h3>
+          <div class="board__rule"></div>
+        </div>
+
+        <div class="board__grp">
+          <h4>Fat Sandwiches</h4>
+          <div class="grid" data-reveal-tiles>
+            <div class="tile">
+              <h5>Fat Frank</h5>
+              <p>Mozz stix, philly steak, cheese sauce and french fries.</p>
+              <p class="price"><i>$</i>8.75</p>
+            </div>
+            <div class="tile">
+              <h5>Fat Rooster</h5>
+              <p>Chicken fries, philly steak, mozz stix, french fries and honey mustard sriracha.</p>
+              <p class="price"><i>$</i>8.75</p>
+            </div>
+            <div class="tile">
+              <h5>Fat Daddy</h5>
+              <p>1/4 lb. deep fried bacon dog topped with chili cheese and french fries.</p>
+              <p class="price"><i>$</i>6.00</p>
+            </div>
+            <div class="tile">
+              <h5>Buffalo B!tch</h5>
+              <p>Toasted hoagie w/ cheese sauce, jalapeno-poppers, shredded chicken, drizzled with Frank's Red Hot. Finished with chipotle ranch.</p>
+              <p class="price"><i>$</i>8.75</p>
+            </div>
+            <div class="tile">
+              <h5>Ass Ripper</h5>
+              <p>Philly steak with jalapeno poppers, onion rings drenched in Frank's Red Hot.</p>
+              <p class="price"><i>$</i>10.00</p>
+            </div>
+            <div class="tile">
+              <span class="note note--sky">Veggie</span>
+              <h5>Veggie Boy</h5>
+              <p>Frank's version of a vegetarian sandwich. Mozz stix, onion rings, jalapeno-poppers, french fries, with cheese sauce, pizza sauce and ranch.</p>
+              <p class="price"><i>$</i>8.75</p>
+            </div>
+            <div class="tile">
+              <h5>Philly Cheese Steak</h5>
+              <p>Shaved steak, grilled onions and cheese sauce.</p>
+              <p class="price"><i>$</i>8.75</p>
+            </div>
+            <div class="tile">
+              <h5>Fat Sammichdilla</h5>
+              <p>Turn any of our fat sandwiches into a dilla. Yes I just said that! Dilla from fatties.</p>
+              <p class="price"><i>$</i>8.75</p>
+            </div>
+            <div class="tile">
+              <span class="note">Kitchen sink</span>
+              <h5>The Boat</h5>
+              <p>Everything but the kitchen sink! Topped with our own baja sauce.</p>
+              <p class="price"><i>$</i>15.00</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="board__grp">
+          <h4>Dogs</h4>
+          <div class="grid" data-reveal-tiles>
+            <div class="tile">
+              <h5>Plain Jane</h5>
+              <p>Plain dog with your choice of ketchup, mustard, relish or onions.</p>
+              <p class="price"><i>$</i>2.50</p>
+            </div>
+            <div class="tile">
+              <h5>Famous Franks Dog</h5>
+              <p>Homemade chili and shredded cheese. It's all you need!</p>
+              <p class="price"><i>$</i>3.50</p>
+            </div>
+            <div class="tile">
+              <h5>Deep Fried Bacon Dog</h5>
+              <p>1/4 lb. all beef hot dog wrapped in applewood smoked bacon and fried crispy brown.</p>
+              <p class="price"><i>$</i>5.00</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="board__grp">
+          <h4>Grilled Cheese &amp; Dillas</h4>
+          <div class="grid" data-reveal-tiles>
+            <div class="tile">
+              <h5>Grilled Cheese</h5>
+              <p>Two kinds of cheese. Pure heaven!</p>
+              <p class="price"><i>$</i>4.00</p>
+            </div>
+            <div class="tile">
+              <h5>Crackhead Grilled Cheese</h5>
+              <p>Triple decker grilled cheese w/ philly steak, BBQ pulled-pork, bacon, w/ cheese sauce, cheddar and BBQ sauce.</p>
+              <p class="price"><i>$</i>8.75</p>
+            </div>
+            <div class="tile">
+              <h5>Texas Barbeque Grilled Cheese</h5>
+              <p>Our grilled cheese topped with BBQ pulled pork and a beer battered onion ring.</p>
+              <p class="price"><i>$</i>7.50</p>
+            </div>
+            <div class="tile">
+              <h5>Steak Dilla</h5>
+              <p>Our philly steak with cheddar.</p>
+              <p class="price"><i>$</i>10.00</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="board__grp">
+          <h4>Fries &amp; Sweets</h4>
+          <div class="grid" data-reveal-tiles>
+            <div class="tile">
+              <h5>Fries</h5>
+              <p>Straight up.</p>
+              <p class="price"><i>$</i>3.00</p>
+            </div>
+            <div class="tile">
+              <h5>Chili Cheese Fries</h5>
+              <p>Straight up fries, cheese sauce, homemade chili and topped with shredded cheddar.</p>
+              <p class="price"><i>$</i>6.00</p>
+            </div>
+            <div class="tile">
+              <h5>Crackhead Fries</h5>
+              <p>Our fries topped with BBQ pulled pork, philly steak and bacon bits then drizzled with sharp white cheese sauce, shredded cheddar and BBQ sauce.</p>
+              <p class="price"><i>$</i>10.00</p>
+            </div>
+            <div class="tile">
+              <h5>Funnel Cake Fries</h5>
+              <p>Fair favorite in french fry form, dusted with powdered sugar and drizzled with caramel sauce.</p>
+              <p class="price"><i>$</i>7.50</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="board__also">
+          <h4>Also on the board</h4>
+          <ul class="chips">
+            <li>Fat Girl</li><li>Fat Guido</li><li>Fat Texan</li><li>Fat Ranchero</li>
+            <li>Fat Fingers</li><li>Jacki Dog</li><li>Quesa-Dilla</li><li>Mac Bites</li>
+            <li>Mozzarella Stix</li><li>Chicken Fries</li><li>Philly Tub</li><li>Soda</li>
+          </ul>
+        </div>
+
+        <div class="board__foot">
+          <p>
+            A 3.5% surcharge is applied for all credit card transactions.
+            Credit card transactions kill small businesses.
+          </p>
+          <div class="pays">
+            <span>Visa</span><span>Mastercard</span><span>Discover</span>
+            <span>Apple Pay</span><span>Samsung Pay</span><span>G Pay</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="draftnote">
+        Transcribed from the truck's board &mdash; confirm prices before launch
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= MERCH ================= -->
+  <section class="sec sec--char">
+    <div class="wrap">
+      <div class="sec__head" data-reveal>
+        <p class="eyebrow">Wear it</p>
+        <h2 class="sec__title slab">Merch.</h2>
+        <p class="prose" style="color:var(--ash)">
+          High quality and custom printed, sold right off the truck.
+        </p>
+      </div>
+
+      <ul class="merch" data-reveal-grid>
+        <li class="tee">
+          <h3>Hoodies</h3>
+          <p>High quality and custom printed Famous Frank's hooded sweatshirts.</p>
+          <p class="price"><i>$</i>35.00</p>
+        </li>
+        <li class="tee">
+          <h3>Crew Necks</h3>
+          <p>High quality and custom printed Famous Frank's crew neck sweatshirts.</p>
+          <p class="price"><i>$</i>30.00</p>
+        </li>
+        <li class="tee">
+          <h3>T-Shirts</h3>
+          <p>High quality and custom printed Famous Frank's t-shirts.</p>
+          <p class="price"><i>$</i>28.00</p>
+        </li>
+      </ul>
+
+      <p class="slogan" data-reveal>Go Fat or Go Home</p>
+    </div>
+  </section>
+
+  <div class="ticker ticker--sky" aria-hidden="true"><div class="ticker__track" id="tick2"></div></div>
+
+  <!-- ================= CARY KNIGHT SPOT ================= -->
+  <section class="sec cary" id="cary">
+    <div class="wrap split">
+      <div class="stack" style="gap:var(--s3)" data-reveal>
+        <p class="eyebrow eyebrow--sky">On campus since 2019</p>
+        <h2 class="sec__title slab slab--sky">Franks at the<br>Knight Spot.</h2>
+
+        <div>
+          <span class="swipe">
+            <b>Meal swipes welcome</b>
+            <span>Cary Quadrangle &middot; Purdue Dining</span>
+          </span>
+        </div>
+
+        <p style="color:var(--ash); max-width:52ch">
+          Purdue Dining brought us in to take over the grill at the Cary Knight
+          Spot, and it's been a Famous Frank's station ever since. It answers
+          the question we get most: what do I do the other four nights of
+          the week?
+        </p>
+
+        <ul class="ticks">
+          <li>
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" fill="none" stroke="#74B8E0" stroke-width="2.5"/>
+              <path d="M7 12.5l3.2 3.2L17 8.6" fill="none" stroke="#74B8E0" stroke-width="2.8"/>
+            </svg>
+            <span><b>Your swipe works.</b> It's a Purdue Dining location, so it runs on your meal plan rather than your wallet.</span>
+          </li>
+          <li>
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" fill="none" stroke="#74B8E0" stroke-width="2.5"/>
+              <path d="M7 12.5l3.2 3.2L17 8.6" fill="none" stroke="#74B8E0" stroke-width="2.8"/>
+            </svg>
+            <span><b>Indoors, and not at 2am.</b> Same grub, reasonable hours, and a roof when February shows up.</span>
+          </li>
+          <li>
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" fill="none" stroke="#74B8E0" stroke-width="2.5"/>
+              <path d="M7 12.5l3.2 3.2L17 8.6" fill="none" stroke="#74B8E0" stroke-width="2.8"/>
+            </svg>
+            <span><b>It has its own feed.</b> Follow <a href="https://www.instagram.com/famousfranks.cary/" target="_blank" rel="noopener">@famousfranks.cary</a> for what's running that week.</span>
+          </li>
+        </ul>
+
+        <div class="acts">
+          <a class="btn btn--sky" href="https://www.instagram.com/famousfranks.cary/" target="_blank" rel="noopener">Follow the Knight Spot</a>
+          <a class="btn btn--out" href="https://dining.purdue.edu/" target="_blank" rel="noopener">Purdue Dining hours</a>
+        </div>
+        <p style="color:var(--ash-dk); font-size:var(--t-sm)">
+          Knight Spot hours follow Purdue Dining, not the truck &mdash; check before you walk over.
+        </p>
+      </div>
+
+      <figure class="slot" data-reveal>
+        <div class="slot__box">
+          <span class="slot__idx">02</span>
+          <span class="slot__tag">Photo needed</span>
+          <span class="slot__label">The Franks station inside<br>Cary Knight Spot &mdash; counter, signage, line</span>
+        </div>
+        <figcaption>Client photography &mdash; 4:3, space already reserved</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= CATERING ================= -->
+  <section class="sec sec--char sec--grid" id="catering">
+    <div class="wrap split">
+      <div class="stack" style="gap:var(--s3)" data-reveal>
+        <p class="eyebrow">Famous Franks 2</p>
+        <div><span class="greek">Hey Greek Life &mdash;<br>let Frank feed your house</span></div>
+        <h2 class="sec__title slab">We'll bring<br>it to you.</h2>
+        <p class="prose" style="color:var(--ash)">
+          Famous Franks 2 is the catering side, run by Joey. Chapter dinners,
+          weddings, birthdays, fairs &mdash; and it isn't just the truck menu:
+          they run full spreads, hot trays, salads and dessert. Fast setup, a
+          menu cut to fit the crowd, and a line that keeps moving.
+        </p>
+        <ul class="tags">
+          <li>Greek life</li><li>Chapter dinners</li><li>Weddings</li>
+          <li>Birthdays</li><li>Student orgs</li><li>Fairs</li><li>Corporate</li>
+        </ul>
+        <div class="acts">
+          <a class="btn" href="#inquire" data-purpose="catering">Ask Joey for a quote</a>
+        </div>
+      </div>
+
+      <figure class="slot" data-reveal>
+        <div class="slot__box">
+          <span class="slot__idx">03</span>
+          <span class="slot__tag">Photo needed</span>
+          <span class="slot__label">A catering spread &mdash; hot trays,<br>salads, the full setup</span>
+        </div>
+        <figcaption>They already post these &mdash; pull from Facebook</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= STORY ================= -->
+  <section class="sec" id="story">
+    <div class="wrap split" style="align-items:start">
+      <div class="stack story" style="gap:var(--s3)" data-reveal>
+        <p class="eyebrow">Since 1996</p>
+        <h2 class="sec__title slab">A cart, a corner,<br>and good timing.</h2>
+        <p class="lede">
+          Frank Farmer started with a hot dog cart at State &amp; Pierce because
+          Purdue at 1am had nowhere to go. It worked. It kept working.
+        </p>
+        <p>
+          The cart became the truck. Frank's kitchen team trained at
+          <b>Johnson &amp; Wales</b>, which is a strange thing to be able to say
+          about a place you find at 2am &mdash; and it shows. The Fats are
+          engineered, not thrown together. His son <b>AJ</b> works the window
+          now, which makes this a second-generation operation on the same
+          corner it started on.
+        </p>
+        <p class="script">"Slinging great munchies since 1996."</p>
+
+        <div class="pass">
+          <span class="pass__n">100%</span>
+          <p>
+            <b>Clean inspection, no violations.</b>
+            Tippecanoe County Health Department retail food establishment
+            inspection &mdash; ready to roll.
+          </p>
+        </div>
+      </div>
+
+      <ol class="beats" data-reveal-grid>
+        <li class="beat">
+          <span class="beat__yr">1996</span>
+          <p><b>The cart.</b> Frank Farmer starts selling hot dogs at State &amp; Pierce Street.</p>
+        </li>
+        <li class="beat">
+          <span class="beat__yr">Then</span>
+          <p><b>The truck.</b> The cart becomes the black truck at 30 Pierce St, right across from Harry's Chocolate Shop.</p>
+        </li>
+        <li class="beat">
+          <span class="beat__yr">2019</span>
+          <p><b>On campus.</b> Purdue Dining opens a Famous Frank's station at the Cary Knight Spot. Meal swipes welcome.</p>
+        </li>
+        <li class="beat">
+          <span class="beat__yr">Now</span>
+          <p><b>Second generation.</b> AJ works the truck, and Famous Franks 2 takes the whole operation on the road.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= SAY ================= -->
+  <section class="sec sec--char">
+    <div class="wrap say" data-reveal>
+      <figure style="margin:0">
+        <blockquote>Showed up early, five star service &mdash; so many compliments.</blockquote>
+        <figcaption>Catering customer &middot; Google review</figcaption>
+      </figure>
+      <p class="stars"><b>4.1</b> out of 5 on Yelp</p>
+    </div>
+  </section>
+
+  <!-- ================= FIND ================= -->
+  <section class="sec" id="find">
+    <div class="wrap split">
+      <div class="stack" style="gap:var(--s3)" data-reveal>
+        <p class="eyebrow">Find the truck</p>
+        <h2 class="harrys">If you can see<br>Harry's,<em>turn around.</em></h2>
+        <p style="color:var(--ash); max-width:44ch">
+          That's us. Black truck, flame stripe, gold letters, lit window.
+        </p>
+
+        <ul class="facts">
+          <li>
+            <span class="k">The corner</span>
+            <span class="v">30 Pierce St, West Lafayette, IN 47906<small>Directly across from Harry's Chocolate Shop</small></span>
+          </li>
+          <li>
+            <span class="k">The hours</span>
+            <span class="v">Thursday &ndash; Saturday, 11PM &ndash; 3:30AM<small>Only while Purdue is in session</small></span>
+          </li>
+          <li>
+            <span class="k">The phone</span>
+            <span class="v">There isn't one.<small>DM us, or <a href="#inquire">send a note</a> &mdash; both reach the truck.</small></span>
+          </li>
+        </ul>
+
+        <div class="acts">
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=30+Pierce+St+West+Lafayette+IN+47906" target="_blank" rel="noopener">Open in Maps</a>
+          <a class="btn btn--out" href="https://maps.apple.com/?q=30+Pierce+St+West+Lafayette+IN+47906" target="_blank" rel="noopener">Apple Maps</a>
+        </div>
+
+        <div class="socials">
+          <a href="https://www.facebook.com/famousfranksPU/" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.instagram.com/explore/tags/famousfranksfam/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.instagram.com/famousfranks.cary/" target="_blank" rel="noopener">@famousfranks.cary</a>
+        </div>
+      </div>
+
+      <figure class="slot" data-reveal>
+        <div class="slot__box">
+          <span class="slot__idx">01</span>
+          <span class="slot__tag">Hero photo</span>
+          <span class="slot__label">The truck at night &mdash; flame stripe,<br>window lit, line out front</span>
+        </div>
+        <figcaption>The shot the whole page is built around</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= INQUIRE ================= -->
+  <section class="sec sec--char" id="inquire">
+    <div class="wrap" style="max-width:900px">
+      <div class="sec__head" data-reveal>
+        <p class="eyebrow">Reach us</p>
+        <h2 class="sec__title slab">Tell us<br>what you need.</h2>
+        <p class="prose" style="color:var(--ash)">
+          A catering quote, a question about the truck, or something else.
+          There's no phone line, so this and our DMs are the fastest way in.
+        </p>
+      </div>
+
+      <form class="form" id="inquiryForm" novalidate>
+        <div class="seg" role="radiogroup" aria-label="What is this about?">
+          <label>
+            <input type="radio" name="purpose" id="purposeCatering" value="Catering &amp; events" checked>
+            <span>Catering &amp; events</span>
+          </label>
+          <label>
+            <input type="radio" name="purpose" id="purposeQuestion" value="A question">
+            <span>Just a question</span>
+          </label>
+        </div>
+
+        <div class="fields">
+          <div class="f">
+            <label for="fName">Name <span class="req">*</span></label>
+            <input id="fName" name="name" type="text" autocomplete="name" placeholder="Who are we talking to?" required>
+            <span class="err" data-err-for="fName"></span>
+          </div>
+          <div class="f">
+            <label for="fEmail">Email <span class="req">*</span></label>
+            <input id="fEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@purdue.edu" required>
+            <span class="err" data-err-for="fEmail"></span>
+          </div>
+
+          <div id="cateringFields">
+            <div class="f">
+              <label for="fDate">Event date</label>
+              <input id="fDate" name="eventDate" type="date">
+              <span class="err" data-err-for="fDate"></span>
+            </div>
+            <div class="f">
+              <label for="fType">Event type</label>
+              <select id="fType" name="eventType">
+                <option>Greek life / chapter</option>
+                <option>Wedding</option>
+                <option>Birthday</option>
+                <option>Campus or student org</option>
+                <option>Fair or festival</option>
+                <option>Corporate</option>
+                <option>Something else</option>
+              </select>
+              <span class="err" data-err-for="fType"></span>
+            </div>
+            <div class="f">
+              <label for="fHeads">Roughly how many people</label>
+              <input id="fHeads" name="headcount" type="number" min="1" inputmode="numeric" placeholder="150">
+              <span class="err" data-err-for="fHeads"></span>
+            </div>
+            <div class="f">
+              <label for="fPhone">Phone (optional)</label>
+              <input id="fPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="So Joey can call you back">
+              <span class="err" data-err-for="fPhone"></span>
+            </div>
+          </div>
+
+          <div class="f f--wide">
+            <label for="fMsg">Details <span class="req">*</span></label>
+            <textarea id="fMsg" name="message" placeholder="Where it is, what time, and anything we should know." required></textarea>
+            <span class="err" data-err-for="fMsg"></span>
+          </div>
+        </div>
+
+        <div class="form__foot">
+          <button class="btn" type="submit">Send it over</button>
+          <p id="formHint">Catering goes straight to Joey. Everything else lands with the truck.</p>
+        </div>
+      </form>
+
+      <div class="sent" id="sentPanel" tabindex="-1" hidden>
+        <h3>Got it.</h3>
+        <p id="sentBody"></p>
+        <div class="sent__acts">
+          <button class="btn" type="button" id="copyAgain">Copy message again</button>
+          <a class="btn" href="https://www.facebook.com/famousfranksPU/" target="_blank" rel="noopener">Open Facebook</a>
+          <button class="btn" type="button" id="againBtn">Write another</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__top">
+      <p class="slab" style="font-size:var(--t-3xl)">Famous Frank's</p>
+      <img class="foot__badge" src="franks-logo.jpg" width="450" height="444" loading="lazy" decoding="async" alt="">
+    </div>
+
+    <div class="foot__cols">
+      <div>
+        <h4>The truck</h4>
+        <ul>
+          <li>30 Pierce St</li>
+          <li>West Lafayette, IN 47906</li>
+          <li>Across from Harry's</li>
+          <li>Thu&ndash;Sat, 11PM&ndash;3:30AM</li>
+        </ul>
+      </div>
+      <div>
+        <h4>On campus</h4>
+        <ul>
+          <li>Cary Knight Spot</li>
+          <li>Cary Quadrangle</li>
+          <li>Meal swipes welcome</li>
+          <li><a href="https://www.instagram.com/famousfranks.cary/" target="_blank" rel="noopener">@famousfranks.cary</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Elsewhere</h4>
+        <ul>
+          <li><a href="https://www.facebook.com/famousfranksPU/" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://www.instagram.com/explore/tags/famousfranksfam/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.doordash.com/search/store/Famous%20Franks/" target="_blank" rel="noopener">DoorDash</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Catering</h4>
+        <p>Famous Franks 2 &mdash; private events, run by Joey. <a href="#inquire">Ask for a quote</a>.</p>
+      </div>
+    </div>
+
+    <div class="foot__end">
+      <p>&copy; <span id="year">2026</span> Famous Frank's &middot; The All-American Original &middot; Est. 1996</p>
+      <p class="tag">#FamousFranksFam</p>
+    </div>
+  </div>
+</footer>
+
+<!-- sticky action bar, phones only -->
+<div class="dock" id="dock">
+  <span class="dock__txt" id="dockTxt"><b>Thu&ndash;Sat</b> 11PM &ndash; 3:30AM</span>
+  <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=30+Pierce+St+West+Lafayette+IN+47906" target="_blank" rel="noopener">Directions</a>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Famous Frank's",
+  "alternateName": "Famous Franks",
+  "slogan": "The All-American Original",
+  "description": "Late-night hot dog and loaded-sandwich truck on Pierce Street in West Lafayette, plus a Famous Frank's station at Purdue's Cary Knight Spot. Slinging great munchies since 1996.",
+  "foundingDate": "1996",
+  "servesCuisine": ["Hot dogs", "American", "Late night"],
+  "priceRange": "$",
+  "paymentAccepted": "Cash, Visa, Mastercard, Discover, Apple Pay, Samsung Pay, Google Pay",
+  "sameAs": ["https://www.facebook.com/famousfranksPU/"],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "30 Pierce St",
+    "addressLocality": "West Lafayette",
+    "addressRegion": "IN",
+    "postalCode": "47906",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Thursday", "Friday", "Saturday"],
+      "opens": "23:00",
+      "closes": "03:30"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.1",
+    "bestRating": "5",
+    "ratingCount": "1",
+    "reviewCount": "1"
+  }
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  /* =========================================================
+     CONFIG
+     ========================================================= */
+
+  /* Point at a real endpoint (Formspree, a Vercel function, anything
+     that takes JSON) to deliver inquiries by email. Left empty, the
+     form falls back to clipboard + social DM. */
+  var FORM_ENDPOINT = "";
+
+  /* Truck service window, Purdue local time. getDay(): 0 = Sunday. */
+  var SERVICE_DAYS = [4, 5, 6];      // Thu, Fri, Sat
+  var OPEN_HOUR = 23;                // 11:00 PM
+  var CLOSE_HOUR = 3.5;              // 3:30 AM next day
+
+  /* The truck only runs while campus is in session.
+     VERIFY against purdue.edu/registrar each year. */
+  var SESSIONS = [
+    { from: "2026-08-24", to: "2026-12-12", name: "Fall 2026" },
+    { from: "2027-01-11", to: "2027-05-01", name: "Spring 2027" }
+  ];
+  var BREAKS = [
+    { from: "2026-10-05", to: "2026-10-06", name: "October break" },
+    { from: "2026-11-25", to: "2026-11-29", name: "Thanksgiving break" },
+    { from: "2027-03-15", to: "2027-03-20", name: "spring break" }
+  ];
+
+  var TZ = "America/Indiana/Indianapolis";
+
+  /* =========================================================
+     CLOCK — read "now" as Purdue wall time, wherever you are
+     ========================================================= */
+
+  var partsFmt = new Intl.DateTimeFormat("en-US", {
+    timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit", hourCycle: "h23"
+  });
+
+  function campusNow() {
+    var p = {};
+    partsFmt.formatToParts(new Date()).forEach(function (part) { p[part.type] = part.value; });
+    return new Date(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute);
+  }
+
+  function ymd(d) {
+    return d.getFullYear() + "-" +
+      String(d.getMonth() + 1).padStart(2, "0") + "-" +
+      String(d.getDate()).padStart(2, "0");
+  }
+
+  /* Before 3:30am you still belong to the previous day's service night. */
+  function serviceNight(d) {
+    var n = new Date(d.getTime());
+    if (n.getHours() + n.getMinutes() / 60 < CLOSE_HOUR) n.setDate(n.getDate() - 1);
+    return n;
+  }
+
+  function inSession(d) {
+    var key = ymd(d);
+    var open = SESSIONS.some(function (s) { return key >= s.from && key <= s.to; });
+    if (!open) return { ok: false, name: null };
+    var br = null;
+    BREAKS.forEach(function (b) { if (key >= b.from && key <= b.to) br = b.name; });
+    return { ok: !br, name: br };
+  }
+
+  function isServiceDay(d) {
+    return SERVICE_DAYS.indexOf(d.getDay()) !== -1 && inSession(d).ok;
+  }
+
+  function status() {
+    var now = campusNow();
+    var t = now.getHours() + now.getMinutes() / 60;
+    var night = serviceNight(now);
+
+    if (isServiceDay(night) && (t >= OPEN_HOUR || t < CLOSE_HOUR)) {
+      var close = new Date(night.getTime());
+      close.setDate(close.getDate() + 1);
+      close.setHours(3, 30, 0, 0);
+      var leftMin = Math.round((close - now) / 60000);
+      return { state: leftMin <= 45 ? "soon" : "open", leftMin: leftMin, now: now };
+    }
+
+    for (var i = 0; i < 400; i++) {
+      var candidate = new Date(now.getTime());
+      candidate.setDate(candidate.getDate() + i);
+      if (!isServiceDay(candidate)) continue;
+      var opensAt = new Date(candidate.getTime());
+      opensAt.setHours(OPEN_HOUR, 0, 0, 0);
+      if (opensAt > now) {
+        return {
+          state: "closed", opensAt: opensAt,
+          minsUntil: Math.round((opensAt - now) / 60000),
+          breakName: inSession(now).name, now: now
+        };
+      }
+    }
+    return { state: "closed", opensAt: null, breakName: inSession(now).name, now: now };
+  }
+
+  /* =========================================================
+     RENDER
+     ========================================================= */
+
+  var pill = document.getElementById("pillStatus");
+  var pillText = document.getElementById("pillText");
+  var heroStatus = document.getElementById("heroStatus");
+  var heroStatusText = document.getElementById("heroStatusText");
+  var heroLine = document.getElementById("heroLine");
+  var dockTxt = document.getElementById("dockTxt");
+
+  var DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  function humanGap(mins) {
+    if (mins < 60) return mins + " min";
+    var h = Math.floor(mins / 60), m = mins % 60;
+    if (h < 24) return h + "h" + (m ? " " + m + "m" : "");
+    var d = Math.round(h / 24);
+    return d + (d === 1 ? " day" : " days");
+  }
+
+  function paint() {
+    var s = status();
+    var key = s.state === "soon" ? "soon" : s.state;
+    pill.setAttribute("data-state", key);
+    heroStatus.setAttribute("data-state", key === "closed" ? "closed" : "open");
+
+    if (s.state === "open") {
+      pillText.textContent = "Open now";
+      heroStatusText.innerHTML = "We're out here &mdash; <b>" + humanGap(s.leftMin) + " left</b>";
+      heroLine.textContent = "Yeah. We're out here.";
+      dockTxt.innerHTML = "<b>Open now</b>" + humanGap(s.leftMin) + " left";
+    } else if (s.state === "soon") {
+      pillText.textContent = "Last call";
+      heroStatusText.innerHTML = "Closing in <b>" + humanGap(s.leftMin) + "</b> &mdash; run";
+      heroLine.textContent = "Last call. Run.";
+      dockTxt.innerHTML = "<b>Last call</b>closing in " + humanGap(s.leftMin);
+    } else if (s.breakName) {
+      pillText.textContent = "Closed · " + s.breakName;
+      heroStatusText.innerHTML = "Truck's down for <b>" + s.breakName + "</b> &mdash; Knight Spot may still be open";
+      heroLine.textContent = "Campus is empty. So are we.";
+      dockTxt.innerHTML = "<b>Closed</b>" + s.breakName;
+    } else if (s.opensAt && s.minsUntil <= 16 * 60 && s.opensAt.getDate() === s.now.getDate()) {
+      pillText.textContent = "Opens in " + humanGap(s.minsUntil);
+      heroStatusText.innerHTML = "Lights on at <b>11PM</b> &mdash; " + humanGap(s.minsUntil) + " from now";
+      heroLine.textContent = "Not yet. Lights on at 11.";
+      dockTxt.innerHTML = "<b>Opens in " + humanGap(s.minsUntil) + "</b>lights on at 11PM";
+    } else if (s.opensAt) {
+      pillText.textContent = DAYS[s.opensAt.getDay()].slice(0, 3) + " · 11PM";
+      heroStatusText.innerHTML = "Next up <b>" + DAYS[s.opensAt.getDay()] + "</b> at 11PM";
+      heroLine.textContent = "Closed tonight. " + DAYS[s.opensAt.getDay()] + ", then.";
+      dockTxt.innerHTML = "<b>Closed tonight</b>next: " + DAYS[s.opensAt.getDay()] + " 11PM";
+    } else {
+      pillText.textContent = "Thu–Sat nights";
+      heroStatusText.innerHTML = "Thursday to Saturday, <b>11PM&ndash;3:30AM</b>";
+      heroLine.textContent = "Late night on Pierce Street.";
+      dockTxt.innerHTML = "<b>Thu&ndash;Sat</b>11PM &ndash; 3:30AM";
+    }
+  }
+
+  paint();
+  setInterval(paint, 30000);
+
+  /* =========================================================
+     TICKERS
+     ========================================================= */
+
+  function fill(el, items) {
+    var half = items.map(function (l) {
+      return "<span>" + l + "</span><span>&#9632;</span>";
+    }).join("");
+    el.innerHTML = half + half;
+  }
+  fill(document.getElementById("tick1"), [
+    "Go fat or go home", "The All-American Original", "Thu · Fri · Sat",
+    "11PM – 3:30AM", "30 Pierce St", "Across from Harry's", "#FamousFranksFam"
+  ]);
+  fill(document.getElementById("tick2"), [
+    "Meal swipes welcome", "Cary Knight Spot", "Purdue Dining",
+    "Same grub, indoors", "@famousfranks.cary", "Since 2019"
+  ]);
+
+  /* =========================================================
+     MOTION — GSAP + ScrollTrigger.
+     All start states are set by GSAP itself, so no-JS visitors and
+     crawlers always receive the fully rendered page.
+     ========================================================= */
+
+  if (window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    var mm = gsap.matchMedia();
+
+    mm.add({
+      motion: "(prefers-reduced-motion: no-preference)",
+      reduced: "(prefers-reduced-motion: reduce)"
+    }, function (ctx) {
+      if (ctx.conditions.reduced) return;   // final state, no motion
+
+      /* --- hero: one orchestrated load-in --- */
+      var tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+      tl.from("[data-hero] > *", { opacity: 0, y: 24, duration: .5, stagger: .08 })
+        .from("[data-badge]", { opacity: 0, scale: .9, duration: .6, ease: "back.out(1.4)" }, .1);
+
+      /* --- section reveals: Scroll Reveal (Standard) ---
+         y:24 / stagger .08 / power2.out, scoped per container,
+         capped at 8 children so the last item never feels laggy. */
+      gsap.utils.toArray("[data-reveal]").forEach(function (el) {
+        gsap.from(el.children, {
+          opacity: 0, y: 24, duration: .5, stagger: .08, ease: "power2.out",
+          scrollTrigger: { trigger: el, start: "top 85%", once: true }
+        });
+      });
+
+      /* --- card grids: Stagger List (Standard), grid-aware --- */
+      gsap.utils.toArray("[data-reveal-grid]").forEach(function (el) {
+        gsap.from(el.children, {
+          opacity: 0, scale: .94, y: 16, duration: .45,
+          stagger: { each: .06, from: "start", grid: "auto" },
+          ease: "back.out(1.4)",
+          scrollTrigger: { trigger: el, start: "top 85%", once: true }
+        });
+      });
+
+      /* --- menu tiles: same stagger, but power2 not back.out —
+         overshoot reads as sloppy on informational UI. --- */
+      gsap.utils.toArray("[data-reveal-tiles]").forEach(function (el) {
+        gsap.from(el.children, {
+          opacity: 0, y: 14, duration: .4,
+          stagger: { each: .035, from: "start", grid: "auto" },
+          ease: "power2.out",
+          scrollTrigger: { trigger: el, start: "top 88%", once: true }
+        });
+      });
+
+      /* --- one scrub: the badge drifts against the scroll.
+         No pinning anywhere — it fights native scroll on mobile. --- */
+      gsap.to("[data-badge]", {
+        yPercent: -14, ease: "none",
+        scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 1 }
+      });
+    });
+
+    /* Fonts change metrics — recalculate trigger positions. */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+    }
+    window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+  }
+
+  /* =========================================================
+     NAV
+     ========================================================= */
+
+  var navToggle = document.getElementById("navToggle");
+  var nav = document.getElementById("nav");
+  navToggle.addEventListener("click", function () {
+    var open = nav.classList.toggle("is-open");
+    navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    navToggle.textContent = open ? "Close" : "Menu";
+  });
+  nav.addEventListener("click", function (e) {
+    if (e.target.tagName === "A") {
+      nav.classList.remove("is-open");
+      navToggle.setAttribute("aria-expanded", "false");
+      navToggle.textContent = "Menu";
+    }
+  });
+
+  /* =========================================================
+     FORM
+     ========================================================= */
+
+  var form = document.getElementById("inquiryForm");
+  var sentPanel = document.getElementById("sentPanel");
+  var sentBody = document.getElementById("sentBody");
+  var cateringFields = document.getElementById("cateringFields");
+  var lastPayload = "";
+
+  function syncPurpose() {
+    var catering = document.getElementById("purposeCatering").checked;
+    Array.prototype.forEach.call(cateringFields.children, function (f) {
+      f.style.display = catering ? "" : "none";
+    });
+    document.getElementById("fMsg").placeholder = catering
+      ? "Where it is, what time, and anything we should know."
+      : "What can we help with?";
+  }
+  Array.prototype.forEach.call(form.querySelectorAll('input[name="purpose"]'), function (r) {
+    r.addEventListener("change", syncPurpose);
+  });
+  syncPurpose();
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-purpose="catering"]'), function (a) {
+    a.addEventListener("click", function () {
+      document.getElementById("purposeCatering").checked = true;
+      syncPurpose();
+    });
+  });
+
+  function setError(input, msg) {
+    var field = input.closest(".f");
+    var slot = field.querySelector(".err");
+    field.setAttribute("data-invalid", msg ? "1" : "0");
+    slot.textContent = msg || "";
+    if (msg) {
+      slot.id = slot.getAttribute("data-err-for") + "-err";
+      input.setAttribute("aria-invalid", "true");
+      input.setAttribute("aria-describedby", slot.id);
+    } else {
+      input.removeAttribute("aria-invalid");
+    }
+  }
+
+  function validate() {
+    var ok = true;
+    var name = document.getElementById("fName");
+    var email = document.getElementById("fEmail");
+    var msg = document.getElementById("fMsg");
+
+    setError(name, name.value.trim() ? "" : (ok = false, "We need a name to call you."));
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim());
+    setError(email, emailOk ? "" : (ok = false, "Check the email — we reply there."));
+    setError(msg, msg.value.trim().length > 4 ? "" : (ok = false, "Tell us a little more."));
+
+    if (!ok) {
+      var first = form.querySelector('[data-invalid="1"] input, [data-invalid="1"] textarea');
+      if (first) first.focus();
+    }
+    return ok;
+  }
+
+  function compose() {
+    var data = new FormData(form);
+    var out = ["Famous Frank's — " + data.get("purpose")];
+    out.push("Name: " + data.get("name"));
+    out.push("Email: " + data.get("email"));
+    if (document.getElementById("purposeCatering").checked) {
+      if (data.get("eventDate")) out.push("Date: " + data.get("eventDate"));
+      if (data.get("eventType")) out.push("Event: " + data.get("eventType"));
+      if (data.get("headcount")) out.push("Headcount: " + data.get("headcount"));
+      if (data.get("phone")) out.push("Phone: " + data.get("phone"));
+    }
+    out.push("");
+    out.push(data.get("message"));
+    return out.join("\n");
+  }
+
+  function copy(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text)
+        .then(function () { return true; }, function () { return false; });
+    }
+    return Promise.resolve(false);
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!validate()) return;
+
+    lastPayload = compose();
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+
+    function finish(byEmail, copied) {
+      form.hidden = true;
+      sentPanel.hidden = false;
+      if (byEmail) {
+        sentBody.textContent =
+          "Your note is on its way. We read these between shifts, so give us a " +
+          "day — catering questions go straight to Joey.";
+        document.getElementById("copyAgain").hidden = true;
+      } else {
+        sentBody.textContent = copied
+          ? "This demo site isn't wired to an inbox yet, so we've copied your " +
+            "message to your clipboard — paste it into a Facebook message and " +
+            "it lands with the truck."
+          : "This demo site isn't wired to an inbox yet. Copy your message with " +
+            "the button below, then send it over on Facebook.";
+      }
+      sentPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+      sentPanel.focus();
+      if (window.ScrollTrigger) ScrollTrigger.refresh();
+    }
+
+    if (FORM_ENDPOINT) {
+      fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(form)))
+      }).then(function (r) {
+        finish(r.ok, false);
+        if (!r.ok) copy(lastPayload);
+      }).catch(function () {
+        copy(lastPayload).then(function (c) { finish(false, c); });
+      });
+    } else {
+      copy(lastPayload).then(function (c) { finish(false, c); });
+    }
+  });
+
+  document.getElementById("copyAgain").addEventListener("click", function () {
+    var b = this;
+    copy(lastPayload).then(function (ok) {
+      b.textContent = ok ? "Copied" : "Select and copy manually";
+      setTimeout(function () { b.textContent = "Copy message again"; }, 2200);
+    });
+  });
+
+  document.getElementById("againBtn").addEventListener("click", function () {
+    form.reset();
+    syncPurpose();
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = false;
+    btn.textContent = "Send it over";
+    Array.prototype.forEach.call(form.querySelectorAll(".f"), function (f) {
+      f.setAttribute("data-invalid", "0");
+      var e = f.querySelector(".err");
+      if (e) e.textContent = "";
+    });
+    sentPanel.hidden = true;
+    form.hidden = false;
+    form.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  });
+
+  document.getElementById("year").textContent = String(campusNow().getFullYear());
+})();
+</script>
+</body>
+</html>
