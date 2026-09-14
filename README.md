@@ -5,11 +5,23 @@ late-night truck at 30 Pierce St, West Lafayette, and the Franks station at
 Purdue's Cary Knight Spot. No build step, no dependencies: `index.html` carries
 its own CSS and JS inline. Fonts come from Google Fonts.
 
-## Live preview
+## Live
+
+| | |
+| --- | --- |
+| **Production** | https://famous-franks.vercel.app |
+| **Repo** | https://github.com/ydayal5/Franks |
+| **Vercel project** | `yash-dayal-s-projects/famous-franks` |
+
+The GitHub repo is connected to the Vercel project, so **every push to `main`
+deploys automatically**. No CI config needed — it's a static deploy.
+
+### Private preview (artifact)
 
 https://claude.ai/code/artifact/0a208891-55b1-429b-b2c3-c41ed11d1b78
 
-Private until shared from the page's share menu. Regenerate it after editing
+Private until shared from its share menu — useful for sending the client a look
+before the Vercel URL is public-facing. Regenerate it after editing
 `index.html` by stripping the document wrapper (the Artifact host supplies its
 own charset, viewport and reset):
 
@@ -25,13 +37,20 @@ deploy — the web-ready copy the page actually loads is `franks-logo.jpg`.
 
 ## Deploy
 
+Pushing to `main` is the deploy. To ship from the CLI instead:
+
 ```
-npx vercel           # preview
+npx vercel           # preview deployment
 npx vercel --prod    # production
 ```
 
-`vercel.json` sets clean URLs and basic security headers. Static deploy,
-nothing to configure. Local preview: `npx serve .`
+`vercel.json` sets clean URLs and four security headers (verified live:
+`X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`,
+`Permissions-Policy`). Static deploy, no build step. Local preview:
+`npx serve .`
+
+`vercel link` writes `.env.local` containing a `VERCEL_OIDC_TOKEN` — it is
+gitignored and must stay that way.
 
 ## Structure
 
